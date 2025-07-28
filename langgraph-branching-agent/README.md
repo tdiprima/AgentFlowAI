@@ -1,5 +1,3 @@
-## 📖 README.md
-
 # LangGraph Branching Agent
 
 This project demonstrates a branching agent workflow using [LangGraph](https://github.com/langchain-ai/langgraph). The agent receives an input, routes it to the appropriate node (research, analysis, or escalation) based on its complexity or urgency, and visualizes the workflow for debugging.
@@ -36,22 +34,6 @@ This project demonstrates a branching agent workflow using [LangGraph](https://g
 
 ### 5. **Running the Agent**
 - The script runs three sample inputs, showing how each is routed and handled, and prints the final results.
-
-## 🚀 How to Run
-
-1. **Install dependencies:**
-    ```bash
-    pip install langgraph
-    ```
-
-2. **Run the script:**
-    ```bash
-    python main.py
-    ```
-
-3. **Check the generated `workflow_graph.png`** to see the workflow structure.
-
----
 
 ## 🧩 Customizing
 
