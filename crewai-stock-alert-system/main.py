@@ -10,6 +10,7 @@ from config import (
 import smtplib
 from email.mime.text import MIMEText
 
+
 # Tool: Email sender
 def send_email_alert(subject, body):
     msg = MIMEText(body)
@@ -21,6 +22,7 @@ def send_email_alert(subject, body):
         server.login(EMAIL_SENDER, EMAIL_PASSWORD)
         server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, msg.as_string())
 
+
 # Agent 1: Researcher - Fetches and monitors stock prices
 def researcher_task():
     stock_data = {}
@@ -29,6 +31,7 @@ def researcher_task():
         if prev is not None and curr is not None:
             stock_data[symbol] = {"prev": prev, "current": curr}
     return stock_data
+
 
 # Agent 2: Analyst - Generates insights and triggers alerts
 def analyst_task(stock_data):
@@ -73,6 +76,7 @@ analysis_task = Task(
     expected_output="List of insights and any alerts for significant price changes"
 )
 
+
 # Task Chaining
 def main():
     # Execute the traditional functions directly since CrewAI agents need LLM integration
@@ -90,6 +94,7 @@ def main():
         # print("Alert sent!")
     else:
         print("No significant changes detected.")
+
 
 if __name__ == "__main__":
     main()
