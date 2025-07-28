@@ -39,6 +39,60 @@ This project is a simple multi-agent system built with [CrewAI](https://github.c
 
 ---
 
-**Happy Monitoring!**
+## Note!
+
+I removed the **CrewAI pattern** because it failed due to complex dependency conflicts between Pydantic v1/v2, LangChain versions, and CrewAI versions. The error was:
+
+  ```
+  PydanticUserError: The `__modify_schema__` method is not supported in Pydantic v2. Use
+  `__get_pydantic_json_schema__` instead in class `SecretStr`.
+  ```
+
+  The proper CrewAI pattern would be:
+
+  ```python
+  from crewai import Agent, Task, Crew
+
+  # Define agents
+  researcher_agent = Agent(
+      role="researcher",
+      goal="Get up-to-date stock price data for analysis.",
+      backstory="You are an experienced financial data researcher...",
+      verbose=True
+  )
+
+  analyst_agent = Agent(
+      role="analyst",
+      goal="Identify significant changes and trigger alerts.",
+      backstory="You are a skilled financial analyst...",
+      verbose=True
+  )
+
+  # Define tasks
+  research_task = Task(
+      description="Fetch current and previous stock prices...",
+      agent=researcher_agent,
+      expected_output="Stock price data with previous and current prices"
+  )
+
+  analysis_task = Task(
+      description="Analyze stock price changes...",
+      agent=analyst_agent,
+      expected_output="List of insights and alerts",
+      context=[research_task]
+  )
+
+  # Create crew
+  crew = Crew(
+      agents=[researcher_agent, analyst_agent],
+      tasks=[research_task, analysis_task],
+      verbose=2
+  )
+
+  # Execute
+  result = crew.kickoff()
+  ```
+
+But the dependency conflicts made this impossible to run, so I created a functional equivalent that mimics the CrewAI workflow without the framework.
 
 <br>
