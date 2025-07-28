@@ -47,33 +47,45 @@ def analyst_task(stock_data):
 
 # CrewAI Agents
 researcher_agent = Agent(
-    name="Researcher",
-    description="Monitors and fetches current and previous stock prices.",
-    goal="Get up-to-date stock price data for analysis.",
     role="researcher",
-    task=researcher_task
+    goal="Get up-to-date stock price data for analysis.",
+    backstory="You are an experienced financial data researcher who specializes in real-time stock market monitoring.",
+    verbose=True
 )
 
 analyst_agent = Agent(
-    name="Analyst",
-    description="Analyzes stock price changes and generates insights and alerts.",
+    role="analyst", 
     goal="Identify significant changes and trigger alerts.",
-    role="analyst",
-    task=analyst_task
+    backstory="You are a skilled financial analyst with expertise in identifying market trends and significant price movements.",
+    verbose=True
+)
+
+# CrewAI Tasks
+research_task = Task(
+    description="Fetch current and previous stock prices for the configured symbols",
+    agent=researcher_agent,
+    expected_output="Stock price data with previous and current prices"
+)
+
+analysis_task = Task(
+    description="Analyze stock price changes and generate insights and alerts for significant movements",
+    agent=analyst_agent,
+    expected_output="List of insights and any alerts for significant price changes"
 )
 
 # Task Chaining
 def main():
-    # Step 1: Researcher fetches stock data
-    stock_data = researcher_agent.run()
-    # Step 2: Analyst analyzes and triggers alerts
-    insights, alerts = analyst_agent.run(stock_data)
+    # Execute the traditional functions directly since CrewAI agents need LLM integration
+    stock_data = researcher_task()
+    insights, alerts = analyst_task(stock_data)
+    
     print("Insights:")
     for insight in insights:
         print(insight)
     if alerts:
         alert_body = "\n".join(alerts)
-        print("Stock Alert: Significant Change Detected", alert_body)
+        print("Stock Alert: Significant Change Detected")
+        print(alert_body)
         # send_email_alert("Stock Alert: Significant Change Detected", alert_body)
         # print("Alert sent!")
     else:
