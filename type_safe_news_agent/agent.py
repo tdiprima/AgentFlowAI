@@ -6,6 +6,7 @@ from models import NewsSummary
 from typing import List
 from database import save_news_summary
 
+
 def fetch_articles_from_url(url: str) -> List[NewsSummary]:
     try:
         response = requests.get(url, timeout=10)
@@ -73,6 +74,7 @@ def fetch_articles_from_url(url: str) -> List[NewsSummary]:
                 print(f"Skipping article due to error: {e}")
     
     return articles
+
 
 def agent_run(news_sites: List[str]):
     for site in news_sites:

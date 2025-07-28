@@ -1,10 +1,12 @@
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
 
+
 # Define state structure
 class State(TypedDict):
     input: str
     result: str
+
 
 # Define our possible nodes (tasks)
 def research_node(state: State) -> State:
@@ -12,15 +14,18 @@ def research_node(state: State) -> State:
     state["result"] = "Here is the research report."
     return state
 
+
 def analysis_node(state: State) -> State:
     print("Analysis node: Analyzing data...")
     state["result"] = "Here is the analysis summary."
     return state
 
+
 def escalation_node(state: State) -> State:
     print("Escalation node: Escalating to human expert...")
     state["result"] = "Escalated to human expert for further review."
     return state
+
 
 # Decision function: routes input to the right node
 def decision_router(state: State) -> str:
@@ -69,6 +74,7 @@ mermaid_diagram = graph_representation.draw_mermaid()
 with open("workflow_graph.mmd", "w") as f:
     f.write(mermaid_diagram)
 print("Mermaid diagram saved to workflow_graph.mmd")
+
 
 # Example runs
 if __name__ == "__main__":

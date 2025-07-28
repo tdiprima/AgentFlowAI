@@ -2,6 +2,7 @@
 import sqlite3
 from models import NewsSummary
 
+
 def init_db():
     conn = sqlite3.connect('news.db')
     c = conn.cursor()
@@ -17,6 +18,7 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
+
 
 def save_news_summary(news: NewsSummary):
     conn = sqlite3.connect('news.db')
