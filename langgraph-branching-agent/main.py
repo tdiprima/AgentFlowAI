@@ -63,11 +63,12 @@ workflow = graph.compile()
 
 # Visualize the graph
 graph_representation = workflow.get_graph()
-print("Mermaid diagram:")
-print(graph_representation.draw_mermaid())
 
-# pip install pygraphviz grandalf
-# graph_representation.draw_png("workflow_graph.png")
+# Save Mermaid diagram to file
+mermaid_diagram = graph_representation.draw_mermaid()
+with open("workflow_graph.mmd", "w") as f:
+    f.write(mermaid_diagram)
+print("Mermaid diagram saved to workflow_graph.mmd")
 
 # Example runs
 if __name__ == "__main__":
