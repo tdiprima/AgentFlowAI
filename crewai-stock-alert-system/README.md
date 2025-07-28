@@ -32,11 +32,6 @@ This project is a simple multi-agent system built with [CrewAI](https://github.c
 - Adjust the `PRICE_CHANGE_THRESHOLD` to set your own alert level.
 - Update email settings with your own credentials.
 
-## Note
-
-- For Gmail, you may need to use an [App Password](https://support.google.com/accounts/answer/185833?hl=en) instead of your main password.
-- This is a simple demo of agentic task chaining and tool integration using CrewAI.
-
 ---
 
 ## Note!
