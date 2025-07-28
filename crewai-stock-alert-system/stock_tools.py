@@ -1,6 +1,12 @@
 import yfinance as yf
+import time
+import random
 
 def get_latest_stock_price(symbol):
+    # Add random delay between 1-3 seconds to avoid rate limiting
+    delay = random.uniform(1, 3)
+    time.sleep(delay)
+    
     ticker = yf.Ticker(symbol)
     hist = ticker.history(period="2d")
     if len(hist) < 2:
