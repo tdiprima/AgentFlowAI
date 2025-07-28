@@ -26,37 +26,47 @@ Validated news summaries are inserted into a SQLite database (`database.py`). Du
 
 The entry point (`main.py`) initializes the database and runs the agent against a list of news sites. You can add or change URLs in this list as needed.
 
-## How to Use
+### 5. Checking Stored News Summaries
 
-1. **Install dependencies:**
-    ```
-    pip install pydantic beautifulsoup4 requests
-    ```
+After running the agent, you can examine the stored news summaries in the SQLite database using the following commands:
 
-2. **Add real news site URLs** to the `news_sites` list in `main.py`.
-
-3. **Run the agent:**
-    ```
-    python main.py
-    ```
-
-4. **Check `news.db`** for stored news summaries.
-
-## Folder Structure
-
+**View total count of stored articles:**
+```bash
+sqlite3 news.db "SELECT COUNT(*) FROM news;"
 ```
-type_safe_news_agent/
-├── main.py
-├── agent.py
-├── models.py
-├── database.py
-├── news.db
-└── README.md
+
+**View recent articles (latest 10):**
+```bash
+sqlite3 news.db "SELECT title, source, published_at FROM news ORDER BY published_at DESC LIMIT 10;"
 ```
+
+**View all articles from a specific source:**
+```bash
+sqlite3 news.db "SELECT title, published_at FROM news WHERE source LIKE '%npr%' ORDER BY published_at DESC;"
+```
+
+**View full article details:**
+```bash
+sqlite3 news.db "SELECT * FROM news LIMIT 5;"
+```
+
+**Search articles by keyword:**
+```bash
+sqlite3 news.db "SELECT title, summary FROM news WHERE title LIKE '%keyword%' OR summary LIKE '%keyword%';"
+```
+
+The database schema includes the following fields:
+- `id`: Auto-incrementing primary key
+- `title`: Article headline
+- `url`: Article URL (unique constraint)
+- `summary`: Article description/summary
+- `published_at`: Publication timestamp
+- `source`: RSS feed URL
 
 ---
 
-**Note:**  
-Scraping real news sites may require adjusting the HTML selectors in `agent.py` to match the site's structure, and you must respect each site's robots.txt and terms of service.
+The implementation now respects `robots.txt` by using official RSS feeds meant for syndication, and includes proper error handling for network issues.
+
+Handles RSS feeds instead of HTML scraping. RSS feeds have a different structure.
 
 <br>
