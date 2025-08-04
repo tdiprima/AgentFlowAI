@@ -31,7 +31,7 @@ researcher = Agent(
     backstory="""You are a diligent financial data researcher who specializes in 
     retrieving accurate, up-to-date stock price information. You ensure data quality 
     and provide reliable market data for analysis.""",
-    verbose=True,
+    # verbose=True,
     allow_delegation=False
 )
 
@@ -41,7 +41,7 @@ analyst = Agent(
     backstory="""You are an experienced financial analyst who specializes in 
     identifying significant stock price movements. You calculate percentage changes 
     and determine when alerts should be triggered based on predefined thresholds.""",
-    verbose=True,
+    # verbose=True,
     allow_delegation=False
 )
 
@@ -84,7 +84,7 @@ def main():
     crew = Crew(
         agents=[researcher, analyst],
         tasks=[research_task, analysis_task],
-        verbose=True
+        # verbose=True
     )
     
     # Execute the crew
