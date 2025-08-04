@@ -1,3 +1,4 @@
+# python3.10 main.py
 from crewai import Agent, Task, Crew
 from stock_tools import get_latest_stock_price, calculate_percent_change
 from config import (
@@ -23,77 +24,75 @@ def send_email_alert(subject, body):
         server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, msg.as_string())
 
 
-# Agent 1: Researcher - Fetches and monitors stock prices
-def researcher_task():
-    stock_data = {}
-    for symbol in STOCK_SYMBOLS:
-        prev, curr = get_latest_stock_price(symbol)
-        if prev is not None and curr is not None:
-            stock_data[symbol] = {"prev": prev, "current": curr}
-    return stock_data
-
-
-# Agent 2: Analyst - Generates insights and triggers alerts
-def analyst_task(stock_data):
-    alerts = []
-    insights = []
-    for symbol, prices in stock_data.items():
-        percent_change = calculate_percent_change(prices['prev'], prices['current'])
-        insights.append(
-            f"{symbol}: Prev Close=${prices['prev']:.2f}, Current=${prices['current']:.2f}, Change={percent_change:.2f}%"
-        )
-        if abs(percent_change) >= PRICE_CHANGE_THRESHOLD:
-            alerts.append(
-                f"{symbol} changed by {percent_change:.2f}% (Threshold: {PRICE_CHANGE_THRESHOLD}%)"
-            )
-    return insights, alerts
-
-# CrewAI Agents
-researcher_agent = Agent(
-    role="researcher",
-    goal="Get up-to-date stock price data for analysis.",
-    backstory="You are an experienced financial data researcher who specializes in real-time stock market monitoring.",
-    verbose=True
+# Create CrewAI Agents
+researcher = Agent(
+    role='Stock Price Researcher',
+    goal='Fetch and monitor current stock prices for specified symbols',
+    backstory="""You are a diligent financial data researcher who specializes in 
+    retrieving accurate, up-to-date stock price information. You ensure data quality 
+    and provide reliable market data for analysis.""",
+    verbose=True,
+    allow_delegation=False
 )
 
-analyst_agent = Agent(
-    role="analyst", 
-    goal="Identify significant changes and trigger alerts.",
-    backstory="You are a skilled financial analyst with expertise in identifying market trends and significant price movements.",
-    verbose=True
-)
-
-# CrewAI Tasks
-research_task = Task(
-    description="Fetch current and previous stock prices for the configured symbols",
-    agent=researcher_agent,
-    expected_output="Stock price data with previous and current prices"
-)
-
-analysis_task = Task(
-    description="Analyze stock price changes and generate insights and alerts for significant movements",
-    agent=analyst_agent,
-    expected_output="List of insights and any alerts for significant price changes"
+analyst = Agent(
+    role='Stock Price Analyst',
+    goal='Analyze stock price changes and identify significant movements',
+    backstory="""You are an experienced financial analyst who specializes in 
+    identifying significant stock price movements. You calculate percentage changes 
+    and determine when alerts should be triggered based on predefined thresholds.""",
+    verbose=True,
+    allow_delegation=False
 )
 
 
-# Task Chaining
+# Create CrewAI Tasks
+def create_research_task():
+    return Task(
+        description=f"""Fetch current and previous stock prices for the following symbols: {', '.join(STOCK_SYMBOLS)}.
+        For each symbol, retrieve:
+        1. Previous closing price
+        2. Current price
+        
+        Return the data in a structured format that can be used for analysis.""",
+        agent=researcher,
+        expected_output="Stock price data with previous and current prices for each symbol"
+    )
+
+def create_analysis_task():
+    return Task(
+        description=f"""Analyze the stock price data and:
+        1. Calculate percentage change for each stock
+        2. Identify stocks with changes >= {PRICE_CHANGE_THRESHOLD}%
+        3. Generate insights and alerts for significant changes
+        4. If significant changes are detected, prepare email alerts
+        
+        Use the stock price data from the research task.""",
+        agent=analyst,
+        expected_output="Analysis report with insights, alerts, and email notifications if needed"
+    )
+
 def main():
-    # Execute the traditional functions directly since CrewAI agents need LLM integration
-    stock_data = researcher_task()
-    insights, alerts = analyst_task(stock_data)
+    print("🚀 Starting Stock Alert System with CrewAI...")
+    print("=" * 50)
     
-    print("Insights:")
-    for insight in insights:
-        print(insight)
-    if alerts:
-        alert_body = "\n".join(alerts)
-        print("Stock Alert: Significant Change Detected")
-        print(alert_body)
-        # send_email_alert("Stock Alert: Significant Change Detected", alert_body)
-        # print("Alert sent!")
-    else:
-        print("No significant changes detected.")
+    # Create tasks
+    research_task = create_research_task()
+    analysis_task = create_analysis_task()
+    
+    # Create and execute crew
+    crew = Crew(
+        agents=[researcher, analyst],
+        tasks=[research_task, analysis_task],
+        verbose=True
+    )
+    
+    # Execute the crew
+    result = crew.kickoff()
+    
+    print("\n" + "=" * 50)
+    print("🏁 CrewAI Stock Alert System completed.")
+    print(f"Final Result: {result}")
 
 
 if __name__ == "__main__":
