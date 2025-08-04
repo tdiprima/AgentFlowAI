@@ -1,6 +1,6 @@
 ## 🔍 Agentic AI Frameworks
 
-#### 🧠 Popular Frameworks (Pick your fighter)
+### 🧠 Popular Frameworks (Pick your fighter)
 
 * ⚡ **CrewAI** – Fast way to build agents that work together (great for prototyping)
 * 🔁 **LangGraph** – Handles complex workflows (good for nerdy/structured stuff)
