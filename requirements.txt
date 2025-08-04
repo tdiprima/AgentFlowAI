@@ -8,3 +8,5 @@ pydantic_ai
 pydantic
 beautifulsoup4
 requests
+instructor
+agno
