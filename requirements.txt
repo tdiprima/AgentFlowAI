@@ -11,3 +11,6 @@ requests
 instructor
 agno
 smolagents
+pyautogen
+ag2[openai]
+autogen_ext
