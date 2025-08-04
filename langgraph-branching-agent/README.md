@@ -11,7 +11,7 @@ This project demonstrates a branching agent workflow using [LangGraph](https://g
     - **Escalation**: For urgent or error-related issues
 - Executes the corresponding node logic
 - Returns a summary result
-- Generates a workflow visualization (`workflow_graph.png`) to help debug the branching logic
+- Generates a workflow visualization (`workflow_graph.mmd`) to help debug the branching logic
 
 ## 🛠️ How Does the Code Work?
 
@@ -43,6 +43,12 @@ This project demonstrates a branching agent workflow using [LangGraph](https://g
 
 ---
 
-Happy branching!
+### Explanation
+- **State**: A TypedDict defining what data flows through the graph (here, just a `message` string).
+- **Node**: A function (`hello_node`) that processes the state. In a real app, this could call an LLM, but here it's simple.
+- **Edges**: Define the flow (from start to node to end).
+- **Compilation and Invocation**: Turns the graph into an executable app, which you can run with `.invoke()`.
+
+[LangGraph documentation](https://langchain-ai.github.io/langgraph/)
 
 <br>

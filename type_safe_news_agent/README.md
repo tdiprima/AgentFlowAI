@@ -31,31 +31,37 @@ The entry point (`main.py`) initializes the database and runs the agent against 
 After running the agent, you can examine the stored news summaries in the SQLite database using the following commands:
 
 **View total count of stored articles:**
+
 ```bash
 sqlite3 news.db "SELECT COUNT(*) FROM news;"
 ```
 
 **View recent articles (latest 10):**
+
 ```bash
 sqlite3 news.db "SELECT title, source, published_at FROM news ORDER BY published_at DESC LIMIT 10;"
 ```
 
 **View all articles from a specific source:**
+
 ```bash
 sqlite3 news.db "SELECT title, published_at FROM news WHERE source LIKE '%npr%' ORDER BY published_at DESC;"
 ```
 
 **View full article details:**
+
 ```bash
 sqlite3 news.db "SELECT * FROM news LIMIT 5;"
 ```
 
 **Search articles by keyword:**
+
 ```bash
 sqlite3 news.db "SELECT title, summary FROM news WHERE title LIKE '%keyword%' OR summary LIKE '%keyword%';"
 ```
 
 The database schema includes the following fields:
+
 - `id`: Auto-incrementing primary key
 - `title`: Article headline
 - `url`: Article URL (unique constraint)

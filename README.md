@@ -15,7 +15,9 @@
 - **Task/Workflow Orchestration**: Chain tasks with context (CrewAI: `Crew(agents=[...], tasks=[Task(description='Research', agent=researcher)])`);
 
    Conditional routing in LangGraph (`add_conditional_edges` with decision functions).
+
 - **Custom Tools Integration**: Extend agents with tools like web scraping or Slack notifications (e.g., Agno: Subclass `Agent` with tools like `WebScrapeEcom()` and methods like `monitor_competitor`).
+
 - **Gotchas/Anti-Patterns**:
   - Infinite loops: Set token limits, timeouts, max_retries (e.g., `Agent(max_tokens=1000, timeout=30)`); Define explicit completion criteria.
   - Memory explosion: Use smart memory with compression (e.g., `SmartMemory` class limiting to 50 messages and summarizing).
@@ -25,14 +27,20 @@
 
 ### 2. Things To Try Myself
 - **Build a simple multi-agent system using CrewAI:** Create two agents (researcher and analyst) to monitor stock prices, generate insights, and email alerts if changes exceed 5%—focus on task chaining and tool integration.
+
 - **Experiment with LangGraph for a branching workflow:** Implement a decision-making agent that routes between research, analysis, or escalation nodes based on input complexity, adding visualization for debugging.
+
 - **Develop a type-safe agent with PydanticAI:** Define a structured output model (e.g., `BaseModel` for news summaries) and build an agent that scrapes articles, validates outputs, and stores results in a database.
 
 ### 3. Related Concepts I Should Look Into
 - **Multi-modal agents:** Integrating text, image, and voice processing (e.g., using tools like ImageAnalysisTool for handling diverse inputs).
+
 - **Self-improving agents:** Mechanisms for agents to analyze failures, update strategies, and validate improvements via feedback loops.
-- **Hierarchical agent teams:** Structuring agents with roles (e.g., CEO for strategy, researcher for data) for collaborative task execution.
+
+- **Hierarchical agent teams:** Structuring agents with roles (e.g., CEO for strategy researcher for data) for collaborative task execution.
+
 - **LLM observability:** Tools like LangSmith or Helicone for monitoring agent performance, token usage, and error tracing.
+
 - **Agent orchestration frameworks**: Exploring emerging ones like OpenAI Swarm or Microsoft Semantic Kernel for scalable, multi-agent coordination.
 
 ### 4. Python Equivalents

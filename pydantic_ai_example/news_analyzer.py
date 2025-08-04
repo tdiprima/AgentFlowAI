@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
 """
 Pydantic AI News Analysis Example
 
 This script demonstrates how to use Pydantic AI to create intelligent agents
 that can analyze news articles with structured, type-safe responses.
 """
-
 import sqlite3
 from datetime import datetime
 from typing import List, Optional
@@ -47,7 +45,7 @@ class NewsSummary(BaseModel):
 class NewsDatabase:
     """Simple database service for retrieving news articles."""
     
-    def __init__(self, db_path: str = "../news.db"):
+    def __init__(self, db_path: str = "news.db"):
         self.db_path = db_path
     
     def get_recent_articles(self, limit: int = 5) -> List[NewsArticle]:

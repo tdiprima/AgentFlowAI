@@ -32,4 +32,12 @@ This project is a simple multi-agent system built with [CrewAI](https://github.c
 - Adjust the `PRICE_CHANGE_THRESHOLD` to set your own alert level.
 - Update email settings with your own credentials.
 
+---
+
+### Explanation
+- **Agent**: Represents an AI entity with a role, goal, and backstory. It uses an LLM (default is GPT-4) to think and act.
+- **Task**: Defines what the agent should do, including a description and expected output.
+- **Crew**: Orchestrates the agents and tasks. Calling `kickoff()` runs the process.
+- This is a minimal example. In real scenarios, you can add multiple agents, tools (e.g., web search), and complex task delegation.
+
 <br>
