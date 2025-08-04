@@ -1,3 +1,0 @@
-# pip install -r requirements.txt
-crewai==0.1.32
-yfinance
