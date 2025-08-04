@@ -1,5 +1,6 @@
 *.db
 .claude
+workflow_graph.mmd
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
