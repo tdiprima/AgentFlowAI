@@ -4,5 +4,5 @@ line-length = 88
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I"]  # E=pycodestyle, F=pyflakes, I=import order
+select = ["E", "F", "I"]  # E=pycodestyle, F=pyflakes, I=isort
 ignore = []
