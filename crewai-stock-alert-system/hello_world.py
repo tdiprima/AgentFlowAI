@@ -1,16 +1,17 @@
 """
 A simple example of using CrewAI to create a friendly greeting for a user.
 """
-from crewai import Agent, Task, Crew
+
+from crewai import Agent, Crew, Task
 
 # Define an AI Agent
 # This agent is a "Greeter" whose role is to create friendly greetings.
 greeter_agent = Agent(
-    role='Greeter',
+    role="Greeter",
     goal='Generate a friendly "Hello, World!" message personalized for the user',
-    backstory='You are a cheerful AI assistant who loves starting conversations with warm greetings.',
+    backstory="You are a cheerful AI assistant who loves starting conversations with warm greetings.",
     # verbose=True,  # Enable detailed logging
-    allow_delegation=False  # No need for delegation in this simple example
+    allow_delegation=False,  # No need for delegation in this simple example
     # You can add tools here if needed, but for simplicity, we'll skip them
 )
 
@@ -18,8 +19,8 @@ greeter_agent = Agent(
 # The task is to create a greeting message.
 greeting_task = Task(
     description='Create a personalized "Hello, World!" greeting for a user named Bear. Make it fun and engaging.',
-    expected_output='A string containing the greeting message.',
-    agent=greeter_agent
+    expected_output="A string containing the greeting message.",
+    agent=greeter_agent,
 )
 
 # Create a Crew (a group of agents working on tasks)

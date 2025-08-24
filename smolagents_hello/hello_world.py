@@ -1,10 +1,10 @@
-from smolagents import CodeAgent, OpenAIServerModel, WebSearchTool
 import os
+
+from smolagents import CodeAgent, OpenAIServerModel, WebSearchTool
 
 # Configure OpenAI model (replace with your API key)
 model = OpenAIServerModel(
-    model_id="gpt-4o-mini",
-    api_key=os.environ.get("OPENAI_API_KEY")
+    model_id="gpt-4o-mini", api_key=os.environ.get("OPENAI_API_KEY")
 )
 
 # Create a CodeAgent with WebSearchTool

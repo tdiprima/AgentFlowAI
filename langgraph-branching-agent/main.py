@@ -1,5 +1,6 @@
-from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
+
+from langgraph.graph import END, START, StateGraph
 
 
 # Define state structure
@@ -39,6 +40,7 @@ def decision_router(state: State) -> str:
     else:
         return "research"
 
+
 # Define the workflow graph
 graph = StateGraph(State)
 
@@ -51,11 +53,7 @@ graph.add_node("escalation", escalation_node)
 graph.add_conditional_edges(
     START,
     decision_router,
-    {
-        "research": "research",
-        "analysis": "analysis", 
-        "escalation": "escalation"
-    }
+    {"research": "research", "analysis": "analysis", "escalation": "escalation"},
 )
 
 # Connect all nodes to END
@@ -79,9 +77,15 @@ print("Mermaid diagram saved to workflow_graph.mmd")
 # Example runs
 if __name__ == "__main__":
     test_inputs = [
-        {"input": "Summarize the quarterly sales data for the last year.", "result": ""},
+        {
+            "input": "Summarize the quarterly sales data for the last year.",
+            "result": "",
+        },
         {"input": "There is a critical error in the database system.", "result": ""},
-        {"input": "What are the main findings from the recent market research report and how do they compare to last quarter?", "result": ""},
+        {
+            "input": "What are the main findings from the recent market research report and how do they compare to last quarter?",
+            "result": "",
+        },
     ]
     for inp in test_inputs:
         print("\n--- New Run ---")

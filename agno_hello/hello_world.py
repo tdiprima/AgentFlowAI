@@ -12,9 +12,7 @@ agent = Agent(
 
 # Example query
 response = agent.print_response(
-    "Hello, world! What's the capital of Peru?",
-    stream=True,
-    show_full_reasoning=True
+    "Hello, world! What's the capital of Peru?", stream=True, show_full_reasoning=True
 )
 
 # For Grok, replace OpenAIChat with:
